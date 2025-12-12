@@ -30,7 +30,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "drinks_site.urls"
+ROOT_URLCONF = "energy_catalog.urls"
 
 TEMPLATES = [
     {
@@ -46,7 +46,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "drinks_site.wsgi.application"
+WSGI_APPLICATION = "energy_catalog.wsgi.application"
 
 DATABASES = {
     "default": {

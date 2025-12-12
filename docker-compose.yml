@@ -10,14 +10,13 @@ services:
       - "5432:5432"
 
   web:
-    build: .
+    build: ./app
     env_file: .env
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn drinks_site.wsgi:application --bind 0.0.0.0:8000"
+             gunicorn energy_catalog.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - .:/app
       - media:/app/media
       - static:/app/staticfiles
     depends_on:
