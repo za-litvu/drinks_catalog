@@ -1,7 +1,6 @@
-from django.views.generic import ListView, DetailView
-from django.db.models import Avg
+from django.views.generic import ListView
+from django.db.models import Avg, Q
 from ..models import Drink
-
 
 class DrinkListView(ListView):
     model = Drink
@@ -20,11 +19,9 @@ class DrinkListView(ListView):
         q = self.request.GET.get("q")
         if q:
             qs = qs.filter(
-                models.Q(name__icontains=q)
-                | models.Q(brand__icontains=q)
-                | models.Q(tags__name__icontains=q)
+                Q(name__icontains=q) |
+                Q(brand__icontains=q) |
+                Q(tags__name__icontains=q)
             ).distinct()
 
         return qs
-
-

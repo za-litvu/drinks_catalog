@@ -63,15 +63,23 @@
     }
     .card:hover{ transform:translateY(-6px); box-shadow:0 8px 30px rgba(17,24,39,0.08); }
 
-    .card .media{
-      height:140px;
-      background:#f0f2f5;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+    .card .media {
+      height: auto;        /* вместо фиксированных 140px */
+      max-height: 200px;   /* ограничение, если нужно */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f2f5;
     }
-    .card .media img{ width:100%; height:100%; object-fit:cover; display:block; }
+    
+    .card .media img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;  /* чтобы не обрезалось */
+    }
+    
 
     .card .body{
       padding:12px 14px; display:flex; flex-direction:column; gap:8px; flex:1;
@@ -113,7 +121,7 @@
         <article class="card" aria-labelledby="drink-{{ drink.id }}">
           <div class="media">
             {% if drink.image %}
-              <img src="{{ drink.image.url }}" alt="{{ drink.name }}">
+              <img src="{{ drink.thumbnail.url }}" alt="{{ drink.name }}">
             {% else %}
               <svg width="100%" height="100%" viewBox="0 0 200 140" preserveAspectRatio="xMidYMid slice" aria-hidden>
                 <rect width="200" height="140" fill="#f0f2f5"></rect>

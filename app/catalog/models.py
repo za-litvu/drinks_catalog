@@ -1,4 +1,6 @@
 from django.db import models
+from PIL import Image
+import os
 from django.contrib.auth import get_user_model
 
 
@@ -27,6 +29,23 @@ class Drink(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to="drinks/", blank=True, null=True)
+    thumbnail = models.ImageField(upload_to="drinks/thumbs/", editable=False, null=True)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.image:
+            img_path = self.image.path
+            thumb_path = os.path.join(
+                os.path.dirname(img_path),
+                "thumb_" + os.path.basename(img_path)
+            )
+
+            with Image.open(img_path) as img:
+                img.thumbnail((300, 200))  # нужные размеры
+                img.save(thumb_path)
+
+            self.thumbnail.name = "drinks/" + "thumb_" + os.path.basename(img_path)
+            super().save(update_fields=["thumbnail"])
 
     def __str__(self):
         return self.name
